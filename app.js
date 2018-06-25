@@ -20,6 +20,7 @@ mongoose.connection.on('error', (err) => {
 
 //port number
 const port = process.env.PORT || '3000';
+
 const users = require('./routes/users');
 
 const app = express();
@@ -29,6 +30,13 @@ app.use(cors());
 
 //bodyParser middleware
 app.use(bodyParser.json());
+
+//Pasport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
 app.use('/users', users);
 
 //set static folder
